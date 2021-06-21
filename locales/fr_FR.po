@@ -1,0 +1,133 @@
+# French translations for PACKAGE package.
+# Copyright (C) 2021 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Eric Feron <ericferon@scarlet.be>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-21 17:41+0200\n"
+"PO-Revision-Date: 2021-06-21 17:51+0200\n"
+"Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#. TRANS : %1$s is the itemtype name,
+#. %2$s is the name of the item (used for headings of a list)
+#: inc/task_item.class.php:507
+#, php-format
+msgid "%1$s = %2$s"
+msgstr ""
+
+#: inc/task_item.class.php:235
+msgid "Add an item"
+msgstr "Ajouter un élément"
+
+#. completename of task
+#: inc/task.class.php:266
+msgid "As child of"
+msgstr "Comme enfant de"
+
+#: inc/profile.class.php:124 inc/profile.class.php:152
+msgid "Associable items to a ticket"
+msgstr "Elément associable à un ticket"
+
+#: hook.php:195
+msgid "Associate to the Business Process"
+msgstr "Associer au Processus Métier"
+
+#: inc/task.class.php:134 inc/task.class.php:213 inc/task_item.class.php:497
+msgid "Business Process Structure"
+msgstr "Structure de Processus Métier"
+
+#. comment about task
+#: inc/task.class.php:286
+msgid "Comment"
+msgstr "Commentaire"
+
+#. echo "<th rowspan=3></th>";
+#. criticity
+#: inc/task.class.php:293
+msgid "Criticity"
+msgstr "Criticité"
+
+#. description of task
+#: inc/task.class.php:279
+msgid "Description"
+msgstr "Description"
+
+#: inc/task.class.php:139 inc/task.class.php:221 inc/task_item.class.php:274
+#: inc/task_item.class.php:493
+msgid "Entity"
+msgstr "Entité"
+
+#: inc/profile.class.php:117
+msgid "General"
+msgstr "Général"
+
+#: inc/profile.class.php:120
+msgid "Helpdesk"
+msgstr "Aide"
+
+#: inc/task.class.php:129 inc/task.class.php:139 inc/task.class.php:205
+#: inc/task.class.php:221
+msgid "ID"
+msgstr "ID"
+
+#: inc/task_item.class.php:276
+msgid "Inventory number"
+msgstr "Numéro d'inventaire"
+
+#: inc/task.class.php:124 inc/task.class.php:197
+msgid "Last update"
+msgstr "Dernière mise à jour"
+
+#. level of task
+#: inc/task.class.php:104 inc/task.class.php:168 inc/task.class.php:271
+msgid "Level"
+msgstr "Niveau"
+
+#. application
+#: inc/task.class.php:297
+msgid "Linked to application"
+msgstr "Lié à l'application"
+
+#. name of task
+#: hook.php:167 inc/task.class.php:98 inc/task.class.php:159
+#: inc/task.class.php:258 inc/task_item.class.php:272
+#: inc/task_item.class.php:491
+msgid "Name"
+msgstr "Nom"
+
+#: inc/task_item.class.php:275
+msgid "Serial number"
+msgstr "Numéro de série"
+
+#. users
+#: inc/task.class.php:110 inc/task.class.php:177 inc/task.class.php:317
+msgid "Task Expert"
+msgstr "Expert de la tâche"
+
+#: inc/task.class.php:187
+msgid "Task Follow-up"
+msgstr "Suivi de la tâche"
+
+#. groups
+#: inc/task.class.php:117 inc/task.class.php:309
+msgid "Task Owner's group"
+msgstr "Groupe du propriétaire de la tâche"
+
+#. transaction code
+#: inc/task.class.php:301
+msgid "Transaction code"
+msgstr "Code de transaction"
+
+#: inc/task_item.class.php:271
+msgid "Type"
+msgstr "Type"

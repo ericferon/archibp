@@ -1,0 +1,47 @@
+         <root>
+            <name>Business Process</name>
+            <key>archibp</key>
+            <state>stable</state> <!-- stable | unstable | beta | alpha -->
+            <logo>https://raw.githubusercontent.com/ericferon/glpi-archibp/master/bp.png</logo>
+            <description>
+               <short>
+                  <en>This plugin enables you to manage the business processes of your enterprise architecture and associate them with elements of the inventory.</en>
+                  <fr>Ce plugin vous permet de définir les processus métiers de votre architecture d'entreprise et de les associer à des éléments d'inventaire.</fr>
+               </short>
+               <long>
+                  <en>This plugin enables you to manage the business processes of your enterprise architecture and associate them with elements of the inventory.<br/>A business process can be decomposed in tasks, helping you to associate inventory items (typically applications) to these tasks</en>
+                  <fr>Ce plugin vous permet de définir les processus métiers de votre architecture d'entreprise et de les associer à des éléments d'inventaire.<br/>Un processus métier peut être décomposé en tâches, auxquels vous associez des éléments d'inventaires (comme des applications, p.ex).</fr>
+               </long>
+            </description>
+            <homepage>https://github.com/ericferon/glpi-archibp</homepage>
+            <download>https://github.com/ericferon/glpi-archibp/releases</download>
+            <issues>https://github.com/ericferon/glpi-archibp/issues</issues>
+            <readme>https://raw.githubusercontent.com/ericferon/glpi-archibp/master/README.md</readme>
+            <authors>
+               <author>Eric Feron</author>
+            </authors>
+            <versions>
+			<version>
+				<num>1.0.0</num>
+				<compatibility>9.5</compatibility>
+				<download_url>//github.com/ericferon/glpi-archibp/releases/download/1.0.0/archibp-1.0.0.tar.gz</download_url>
+			</version>
+            </versions>
+            <langs>
+               <lang>en_GB</lang>
+               <lang>fr_FR</lang>
+            </langs>
+            <license>GPL v2+</license>
+            <tags>
+               <en>
+                  <tag>Business Processes</tag>
+                  <tag>Architecture</tag>
+               </en>
+               <fr>
+                  <tag>Processus Métiers</tag>
+                  <tag>Architecture</tag>
+              </fr>
+            </tags>
+            <screenshots>
+            </screenshots>
+         </root>
