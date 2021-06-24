@@ -86,61 +86,6 @@ class PluginArchibpTask extends CommonTreeDropdown {
 //      $temp->deleteByCriteria(['plugin_archibp_tasks_id' => $this->fields['id']]);
    }
 
-   function getSearchOptions() {
-
-      $tab                       = [];
-      if (version_compare(GLPI_VERSION,'9.3','ge')) return $tab;
-
-      $tab['common']             = self::getTypeName(2);
-
-      $tab[1]['table']           = $this->getTable();
-      $tab[1]['field']           = 'name';
-      $tab[1]['name']            = __('Name');
-      $tab[1]['datatype']        = 'itemlink';
-      $tab[1]['itemlink_type']   = $this->getType();
-
-      $tab[3]['table']           = $this->getTable();
-      $tab[3]['field']           = 'level';
-      $tab[3]['name']            = __('Level');
-      $tab[3]['datatype']        = 'text';
-
-      $tab[11]['table']          = 'glpi_users';
-      $tab[11]['field']          = 'name';
-      $tab[11]['linkfield']      = 'users_id';
-      $tab[11]['name']           = __('Task Expert', 'archibp');
-      $tab[11]['datatype']       = 'dropdown';
-      $tab[11]['right']          = 'interface';
-
-      $tab[12]['table']          = 'glpi_groups';
-      $tab[12]['field']          = 'name';
-      $tab[12]['linkfield']      = 'groups_id';
-      $tab[12]['name']           = __("Task Owner's group", 'archibp');
-      $tab[12]['condition']      = '`is_assign`';
-      $tab[12]['datatype']       = 'dropdown';
-
-      $tab[14]['table']          = $this->getTable();
-      $tab[14]['field']          = 'date_mod';
-      $tab[14]['massiveaction']  = false;
-      $tab[14]['name']           = __('Last update');
-      $tab[14]['datatype']       = 'datetime';
-
-      $tab[30]['table']          = $this->getTable();
-      $tab[30]['field']          = 'id';
-      $tab[30]['name']           = __('ID');
-      $tab[30]['datatype']       = 'number';
-
-      $tab[80]['table']          = $this->getTable();
-      $tab[80]['field']          = 'completename';
-      $tab[80]['name']           = __('Business Process Structure', 'archibp');
-      $tab[80]['datatype']       = 'dropdown';
-      
-      $tab[81]['table']       = 'glpi_entities';
-      $tab[81]['field']       = 'entities_id';
-      $tab[81]['name']        = __('Entity')."-".__('ID');
-      
-      return $tab;
-   }
-
    // search fields from GLPI 9.3 on
    function rawSearchOptions() {
 
@@ -166,6 +111,14 @@ class PluginArchibpTask extends CommonTreeDropdown {
          'table'    => $this->getTable(),
          'field'    => 'level',
          'name'     => __('Level'),
+         'datatype' => 'text'
+      ];
+
+      $tab[] = [
+         'id'            => '4',
+         'table'         => $this->getTable(),
+         'field'    => 'description',
+         'name'     => __('Description'),
          'datatype' => 'text'
       ];
 
@@ -207,14 +160,6 @@ class PluginArchibpTask extends CommonTreeDropdown {
       ];
 
       $tab[] = [
-         'id'            => '80',
-         'table'         => $this->getTable(),
-         'field'    => 'completename',
-         'name'     => __('Business Process Structure', 'archibp'),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
          'id'    => '81',
          'table' => 'glpi_entities',
          'field' => 'entities_id',
@@ -250,7 +195,11 @@ class PluginArchibpTask extends CommonTreeDropdown {
 */
    function showForm ($ID, $options=[]) {
 
-      $this->initForm($ID, $options);
+		// Because a lot of informations, we use 3 (6) columns
+		//	 Make <table> aware of it
+//		$options['colspan']=4;
+
+	  $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
@@ -278,21 +227,27 @@ class PluginArchibpTask extends CommonTreeDropdown {
       //description of task
       echo "<td>".__('Description').":	</td>";
       echo "<td class='top center' colspan='5'>";
-      Html::autocompletionTextField($this,"description",['size' => "200"]);
+      Html::autocompletionTextField($this,"description",['option' => 'style="width:100%"']);
       echo "</td>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       //comment about task
       echo "<td>".__('Comment').":	</td>";
-      echo "<td class='top center' colspan='5'><textarea cols='100' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "<td class='top center' colspan='5'><textarea cols='100' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-//	  echo "<th rowspan=3></th>";
+      //type
+      echo "<td>".__('Type').": </td><td>";
+	      Dropdown::show('PluginArchibpTaskType', ['value' => $this->fields["plugin_archibp_tasktypes_id"]]);
+      echo "</td>";
       //criticity
       echo "<td>".__('Criticity', 'archibp').": </td><td>";
-      Dropdown::show('PluginArchibpCriticity', ['name' => "plugin_archibp_criticities_id", 'value' => $this->fields["plugin_archibp_criticities_id"],'entity' => $this->fields["entities_id"]]);
+      Dropdown::show('PluginArchibpCriticity', ['name' => "plugin_archibp_criticities_id", 'value' => $this->fields["plugin_archibp_criticities_id"]]);
       echo "</td>";
+      echo "</tr>";
+      
+      echo "<tr class='tab_bg_1'>";
       //application
       echo "<td>".__('Linked to application', 'archibp').": </td><td>";
       Dropdown::show('PluginArchibpSwcomponent', ['name' => "plugin_archibp_swcomponents_id", 'value' => $this->fields["plugin_archibp_swcomponents_id"],'entity' => $this->fields["entities_id"]]);
