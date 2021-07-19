@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-21 17:41+0200\n"
-"PO-Revision-Date: 2021-06-21 17:51+0200\n"
+"POT-Creation-Date: 2021-07-01 09:30+0200\n"
+"PO-Revision-Date: 2021-07-01 09:33+0200\n"
 "Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -30,7 +30,7 @@ msgid "Add an item"
 msgstr "Ajouter un élément"
 
 #. completename of task
-#: inc/task.class.php:266
+#: inc/task.class.php:266 inc/task.class.php:224
 msgid "As child of"
 msgstr "Comme enfant de"
 
@@ -47,23 +47,23 @@ msgid "Business Process Structure"
 msgstr "Structure de Processus Métier"
 
 #. comment about task
-#: inc/task.class.php:286
+#: inc/task.class.php:286 inc/task.class.php:244
 msgid "Comment"
 msgstr "Commentaire"
 
 #. echo "<th rowspan=3></th>";
 #. criticity
-#: inc/task.class.php:293
+#: inc/task.class.php:293 inc/task.class.php:254
 msgid "Criticity"
 msgstr "Criticité"
 
 #. description of task
-#: inc/task.class.php:279
+#: inc/task.class.php:279 inc/task.class.php:122 inc/task.class.php:237
 msgid "Description"
 msgstr "Description"
 
 #: inc/task.class.php:139 inc/task.class.php:221 inc/task_item.class.php:274
-#: inc/task_item.class.php:493
+#: inc/task_item.class.php:493 inc/task.class.php:175
 msgid "Entity"
 msgstr "Entité"
 
@@ -76,7 +76,7 @@ msgid "Helpdesk"
 msgstr "Aide"
 
 #: inc/task.class.php:129 inc/task.class.php:139 inc/task.class.php:205
-#: inc/task.class.php:221
+#: inc/task.class.php:221 inc/task.class.php:159 inc/task.class.php:175
 msgid "ID"
 msgstr "ID"
 
@@ -84,24 +84,25 @@ msgstr "ID"
 msgid "Inventory number"
 msgstr "Numéro d'inventaire"
 
-#: inc/task.class.php:124 inc/task.class.php:197
+#: inc/task.class.php:124 inc/task.class.php:197 inc/task.class.php:151
 msgid "Last update"
 msgstr "Dernière mise à jour"
 
 #. level of task
 #: inc/task.class.php:104 inc/task.class.php:168 inc/task.class.php:271
+#: inc/task.class.php:114 inc/task.class.php:229
 msgid "Level"
 msgstr "Niveau"
 
 #. application
-#: inc/task.class.php:297
+#: inc/task.class.php:297 inc/task.class.php:261
 msgid "Linked to application"
 msgstr "Lié à l'application"
 
 #. name of task
 #: hook.php:167 inc/task.class.php:98 inc/task.class.php:159
 #: inc/task.class.php:258 inc/task_item.class.php:272
-#: inc/task_item.class.php:491
+#: inc/task_item.class.php:491 inc/task.class.php:105 inc/task.class.php:216
 msgid "Name"
 msgstr "Nom"
 
@@ -111,23 +112,33 @@ msgstr "Numéro de série"
 
 #. users
 #: inc/task.class.php:110 inc/task.class.php:177 inc/task.class.php:317
+#: inc/task.class.php:131 inc/task.class.php:290
 msgid "Task Expert"
 msgstr "Expert de la tâche"
 
-#: inc/task.class.php:187
+#: inc/task.class.php:187 inc/task.class.php:141
 msgid "Task Follow-up"
 msgstr "Suivi de la tâche"
 
 #. groups
-#: inc/task.class.php:117 inc/task.class.php:309
+#: inc/task.class.php:117 inc/task.class.php:309 inc/task.class.php:282
 msgid "Task Owner's group"
 msgstr "Groupe du propriétaire de la tâche"
 
+#: inc/task.class.php:167
+msgid "Tasks Structure"
+msgstr "Structure des tâches"
+
 #. transaction code
-#: inc/task.class.php:301
+#: inc/task.class.php:301 inc/task.class.php:265
 msgid "Transaction code"
 msgstr "Code de transaction"
 
-#: inc/task_item.class.php:271
+#. type
+#: inc/task_item.class.php:271 inc/task.class.php:250
 msgid "Type"
 msgstr "Type"
+
+#: inc/task.class.php:273
+msgid "URL doc."
+msgstr "URL doc."
