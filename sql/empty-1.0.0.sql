@@ -19,6 +19,7 @@ CREATE TABLE `glpi_plugin_archibp_tasks` (
   `plugin_archibp_criticities_id` INT(11) NOT NULL default '0' COMMENT 'BP criticality : Normal, Important, ...' ,
   `plugin_archibp_swcomponents_id` INT(11) NOT NULL default '0' COMMENT 'from archisw',
   `transactioncode` text COLLATE utf8_unicode_ci,
+  `address` varchar(255) collate utf8_unicode_ci default NULL,
   `users_id` int(11) NOT NULL default '0' COMMENT 'RELATION to glpi_users (id)',
   `groups_id` int(11) NOT NULL default '0' COMMENT 'RELATION to glpi_groups (id)',
   `date_mod` datetime default NULL,
@@ -84,8 +85,8 @@ INSERT INTO `glpi_plugin_archibp_tasktypes` ( `id` , `name` , `comment` )  VALUE
 -- -----------------------------------------------------
 -- Table `plugin_archibp_criticities`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `plugin_archibp_criticities`;
-CREATE  TABLE `plugin_archibp_criticities` (
+DROP TABLE IF EXISTS `glpi_plugin_archibp_criticities`;
+CREATE  TABLE `glpi_plugin_archibp_criticities` (
   `id` INT(11) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NOT NULL ,
   `comment` VARCHAR(45) NULL ,
