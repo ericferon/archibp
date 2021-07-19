@@ -148,7 +148,9 @@ function plugin_archibp_getDropdown() {
 
    $plugin = new Plugin();
    if ($plugin->isActivated("archibp"))
-		return [];
+		return array('PluginArchibpTasktype'=>PluginArchibpTasktype::getTypeName(2), //getTypeName(2) does not work
+                'PluginArchibpCriticity'=>PluginArchibpCriticity::getTypeName(2)
+                );
    else
       return [];
 }
