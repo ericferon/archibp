@@ -34,7 +34,10 @@ class PluginArchibpTask extends CommonTreeDropdown {
    static $rightname = "plugin_archibp";
    protected $usenotepad         = true;
    
-   static $types = ['Computer'];
+   static $types = ['Group', 
+					'PluginArchidataDataelement',
+					'PluginArchifunFuncarea',
+					'PluginArchiswSwcomponent'];
 
    static function getTypeName($nb=0) {
 
@@ -44,8 +47,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
    switch ($item->getType()) {
-        case 'Supplier' :
-//      if ($item->getType()=='Supplier') {
+        case 'Group' :
 			if ($_SESSION['glpishow_count_on_tabs']) {
 				return self::createTabEntry(self::getTypeName(2), self::countForItem($item));
 			}
@@ -60,8 +62,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       switch ($item->getType()) {
-        case 'Supplier' :
-//      if ($item->getType()=='Supplier') {
+        case 'Group' :
 			$self = new self();
 			$self->showPluginFromSupplier($item->getField('id'));
             break;
@@ -75,8 +76,8 @@ class PluginArchibpTask extends CommonTreeDropdown {
    static function countForItem(CommonDBTM $item) {
 
       $dbu = new DbUtils();
-      return $dbu->countElementsInTable('glpi_plugin_archibp_task',
-                                  "`suppliers_id` = '".$item->getID()."'");
+      return $dbu->countElementsInTable('glpi_plugin_archibp_tasks'/*,
+                                  "`suppliers_id` = '".$item->getID()."'"*/);
    }
 
    //clean if task are deleted
@@ -157,6 +158,14 @@ class PluginArchibpTask extends CommonTreeDropdown {
          'field'         => 'id',
          'name'          => __('ID'),
          'datatype'      => 'number'
+      ];
+
+      $tab[] = [
+         'id'       => '80',
+         'table'    => $this->getTable(),
+         'field'    => 'completename',
+         'name'     => __('Tasks Structure','archibp'),
+         'datatype' => 'dropdown'
       ];
 
       $tab[] = [
@@ -259,6 +268,15 @@ class PluginArchibpTask extends CommonTreeDropdown {
       echo "</td>";
       echo "</tr>";
 
+		echo "<tr class='tab_bg_1'>";
+		echo "<td>";
+		echo Html::link(__('URL doc.', 'archibp'), $this->fields["address"]);
+		echo "</td>";
+		echo "<td colspan='3'>";
+		Html::autocompletionTextField($this, "address", ['option' => 'style="width:100%"']);
+		echo "</td>";
+		echo "</tr>";
+
       echo "<tr class='tab_bg_1'>";
       //groups
       echo "<td>".__("Task Owner's group", 'archibp')."</td><td>";
@@ -309,8 +327,8 @@ class PluginArchibpTask extends CommonTreeDropdown {
          }
       }
 
-      $where = " WHERE `glpi_plugin_archibp_task`.`is_deleted` = '0' ".
-                       getEntitiesRestrictRequest("AND", "glpi_plugin_archibp_task", '', $p['entity'], true);
+      $where = " WHERE `glpi_plugin_archibp_tasks`.`is_deleted` = '0' ".
+                       getEntitiesRestrictRequest("AND", "glpi_plugin_archibp_tasks", '', $p['entity'], true);
 
       $p['used'] = array_filter($p['used']);
       if (count($p['used'])) {
@@ -320,7 +338,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       $query = "SELECT *
                 FROM `glpi_plugin_archibp_tasktypes`
                 WHERE `id` IN (SELECT DISTINCT `plugin_archibp_tasktypes_id`
-                               FROM `glpi_plugin_archibp_task`
+                               FROM `glpi_plugin_archibp_tasks`
                              $where)
                 ORDER BY `name`";
       $result = $DB->query($query);
