@@ -107,7 +107,7 @@ function plugin_version_archibp() {
 function plugin_archibp_check_prerequisites() {
    global $DB;
    if (version_compare(GLPI_VERSION, '9.5', 'lt')
-       || version_compare(GLPI_VERSION, '9.6', 'ge')) {
+       || version_compare(GLPI_VERSION, '10.1', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
          echo Plugin::messageIncompatible('core', '9.5');
       }

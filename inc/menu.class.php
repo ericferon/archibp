@@ -36,7 +36,7 @@ class PluginArchibpMenu extends CommonGLPI {
 
       $menu                                           = [];
       $menu['title']                                  = self::getMenuName();
-      $menu['page']                                   = "/plugins/archibp/front/task.php";
+      $menu['page']                                   = "/".Plugin::getWebDir('archibp', false)."/front/task.php";
       $menu['links']['search']                        = PluginArchibpTask::getSearchURL(false);
       if (PluginArchibpTask::canCreate()) {
          $menu['links']['add']                        = PluginArchibpTask::getFormURL(false);

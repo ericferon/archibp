@@ -361,14 +361,14 @@ class PluginArchibpTask extends CommonTreeDropdown {
                         'used'   => $p['used']];
 
       $out .= Ajax::updateItemOnSelectEvent($field_id,"show_".$p['name'].$rand,
-                                            $CFG_GLPI["root_doc"]."/plugins/archibp/ajax/dropdownTypeTasks.php",
+                                            Plugin::getPhpDir("archibp")."/ajax/dropdownTypeTasks.php",
                                             $params, false);
       $out .= "<span id='show_".$p['name']."$rand'>";
       $out .= "</span>\n";
 
       $params['tasktype'] = 0;
       $out .= Ajax::updateItem("show_".$p['name'].$rand,
-                               $CFG_GLPI["root_doc"]. "/plugins/archibp/ajax/dropdownTypeTasks.php",
+                               Plugin::getPhpDir("archibp")."/ajax/dropdownTypeTasks.php",
                                $params, false);
       if ($p['display']) {
          echo $out;

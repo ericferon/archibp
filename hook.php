@@ -27,12 +27,12 @@
 function plugin_archibp_install() {
    global $DB;
 
-   include_once (GLPI_ROOT."/plugins/archibp/inc/profile.class.php");
+   include_once (Plugin::getPhpDir("archibp")."/inc/profile.class.php");
 
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archibp_tasks")) {
 
-		$DB->runFile(GLPI_ROOT ."/plugins/archibp/sql/empty-1.0.0.sql");
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.0.sql");
 	}
 
    
@@ -68,8 +68,8 @@ function plugin_archibp_install() {
 function plugin_archibp_uninstall() {
    global $DB;
    
-   include_once (GLPI_ROOT."/plugins/archibp/inc/profile.class.php");
-   include_once (GLPI_ROOT."/plugins/archibp/inc/menu.class.php");
+   include_once (Plugin::getPhpDir("archibp")."/inc/profile.class.php");
+   include_once (Plugin::getPhpDir("archibp")."/inc/menu.class.php");
    
 	$tables = ["glpi_plugin_archibp_tasks",
 					"glpi_plugin_archibp_criticities",
