@@ -89,13 +89,13 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '1.0.4',
+      'version' => '1.0.5',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',
       'requirements' => [
          'glpi' => [
-            'min' => '9.5',
+            'min' => '10.0',
             'dev' => false
          ]
       ]
@@ -106,10 +106,10 @@ function plugin_version_archibp() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_archibp_check_prerequisites() {
    global $DB;
-   if (version_compare(GLPI_VERSION, '9.5', 'lt')
+   if (version_compare(GLPI_VERSION, '10.0', 'lt')
        || version_compare(GLPI_VERSION, '10.1', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.5');
+         echo Plugin::messageIncompatible('core', '10.0');
       }
       return false;
    } else {
@@ -118,7 +118,7 @@ function plugin_archibp_check_prerequisites() {
 		if($DB->numRows($result_query) == 1) {
 			return true;
 		} else {
-			echo "the plugin 'archisw' must be installed before using 'dataflows'";
+			echo "The plugin 'archisw' (a.k.a Apps structure inventory) must be installed before using 'archibp' (Business Process)";
 		}
 	}
 }

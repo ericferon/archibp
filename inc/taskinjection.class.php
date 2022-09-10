@@ -29,7 +29,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 /**
- * Class PluginArchiswSwcomponentInjection
+ * Class PluginArchibpTaskInjection
  */
 class PluginArchibpTaskInjection extends PluginArchibpTask
    implements PluginDatainjectionInjectionInterface {
