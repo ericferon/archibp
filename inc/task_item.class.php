@@ -535,7 +535,9 @@ class PluginArchibpTask_Item extends CommonDBRelation {
             echo "<td>".Dropdown::getDropdownName("glpi_plugin_archibp_tasktypes",$data["plugin_archibp_tasktypes_id"])."</td>";
             echo "<td>".Dropdown::getDropdownName("glpi_plugin_archibp_criticities",$data["plugin_archibp_criticities_id"])."</td>";
       ;
-            echo "<td>".echo Html::input('completename',['value' => $this->fields['completename'], 'id' => "completename" , 'size' => 30, 'readonly' => true])."</td>";
+            echo "<td>";
+            echo Html::input('completename',['value' => $this->fields['completename'], 'id' => "completename" , 'size' => 30, 'readonly' => true]);
+            echo "</td>";
 /*            echo "<td>";
             echo "<a href=\"".$CFG_GLPI["root_doc"]."/front/supplier.form.php?id=".$data["suppliers_id"]."\">";
             echo Dropdown::getDropdownName("glpi_suppliers",$data["suppliers_id"]);
