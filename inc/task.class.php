@@ -215,7 +215,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       //name of task
       echo "<td>".__('Name')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this,"name");
+      echo Html::input('name',['value' => $this->fields['name'], 'id' => "name"]);
       echo "</td>";
       echo "</tr>";
 
@@ -228,7 +228,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       //level of task
       echo "<td>".__('Level').": </td>";
       echo "<td>";
-      Html::autocompletionTextField($this,"level",['size' => "2", 'option' => "readonly='readonly'"]);
+      echo Html::input('level',['value' => $this->fields['level'], 'id' => "level" , 'size' => 2, 'readonly' => true]);
       echo "</td>";
       echo "</tr>";
 
@@ -236,7 +236,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       //description of task
       echo "<td>".__('Description').":	</td>";
       echo "<td class='top center' colspan='5'>";
-      Html::autocompletionTextField($this,"description",['option' => 'style="width:100%"']);
+      echo Html::input('description',['value' => $this->fields['description'], 'id' => "description" , 'width' => "100%"]);
       echo "</td>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
@@ -264,7 +264,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       //transaction code
       echo "<td>".__('Transaction code', 'archibp').": </td>";
       echo "<td>";
-      Html::autocompletionTextField($this,"transactioncode",['size' => "100"]);
+      echo Html::input('transactioncode',['value' => $this->fields['transactioncode'], 'id' => "transactioncode" , 'width' => "100%"]);
       echo "</td>";
       echo "</tr>";
 
@@ -273,7 +273,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
 		echo Html::link(__('URL doc.', 'archibp'), $this->fields["address"]);
 		echo "</td>";
 		echo "<td colspan='3'>";
-		Html::autocompletionTextField($this, "address", ['option' => 'style="width:100%"']);
+        echo Html::input('address',['value' => $this->fields['address'], 'id' => "address" , 'width' => "100%"]);
 		echo "</td>";
 		echo "</tr>";
 
