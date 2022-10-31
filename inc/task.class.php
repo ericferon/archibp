@@ -124,6 +124,22 @@ class PluginArchibpTask extends CommonTreeDropdown {
       ];
 
       $tab[] = [
+         'id'       => '9',
+         'table'    => 'glpi_plugin_archibp_tasktypes',
+         'field'    => 'name',
+         'name'     => PluginArchibpTaskType::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '10',
+         'table'    => 'glpi_plugin_archibp_criticities',
+         'field'    => 'name',
+         'name'     => PluginArchibpCriticity::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
          'id'        => '11',
          'table'     => 'glpi_users',
          'field'     => 'name',
@@ -361,14 +377,14 @@ class PluginArchibpTask extends CommonTreeDropdown {
                         'used'   => $p['used']];
 
       $out .= Ajax::updateItemOnSelectEvent($field_id,"show_".$p['name'].$rand,
-                                            Plugin::getPhpDir("archibp")."/ajax/dropdownTypeTasks.php",
+                                            Plugin::getWebDir("archibp")."/ajax/dropdownTypeArchibp.php",
                                             $params, false);
       $out .= "<span id='show_".$p['name']."$rand'>";
       $out .= "</span>\n";
 
       $params['tasktype'] = 0;
       $out .= Ajax::updateItem("show_".$p['name'].$rand,
-                               Plugin::getPhpDir("archibp")."/ajax/dropdownTypeTasks.php",
+                               Plugin::getWebDir("archibp")."/ajax/dropdownTypeArchibp.php",
                                $params, false);
       if ($p['display']) {
          echo $out;

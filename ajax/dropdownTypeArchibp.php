@@ -24,7 +24,7 @@
  --------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'],"dropdownTypeTasks.php")) {
+if (strpos($_SERVER['PHP_SELF'],"dropdownTypeArchibp.php")) {
    $AJAX_INCLUDE=1;
    include ('../../../inc/includes.php');
    header("Content-Type: text/html; charset=UTF-8");
@@ -40,7 +40,7 @@ if (isset($_POST["tasktype"])) {
    // Clean used array
    if (isset($_POST['used']) && is_array($_POST['used']) && (count($_POST['used']) > 0)) {
       $query = "SELECT `id`
-                FROM `glpi_plugin_archibp_task`
+                FROM `glpi_plugin_archibp_tasks`
                 WHERE `id` IN (".implode(',',$_POST['used']).")
                       AND `plugin_archibp_tasktypes_id` = '".$_POST["tasktype"]."'";
 
@@ -55,7 +55,7 @@ if (isset($_POST["tasktype"])) {
 					'width'     => '50%',
 					'entity'    => $_POST['entity'],
 					'rand'      => $_POST['rand'],
-					'condition' => ["glpi_plugin_archibp_task.plugin_archibp_tasktypes_id"=>$_POST["tasktype"]]]);
+					'condition' => ["glpi_plugin_archibp_tasks.plugin_archibp_tasktypes_id"=>$_POST["tasktype"]]]);
 
 }
 
