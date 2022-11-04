@@ -26,7 +26,7 @@
 
 // Init the hooks of the plugins -Needed
 function plugin_init_archibp() {
-   global $PLUGIN_HOOKS;
+   global $PLUGIN_HOOKS, $CFG_GLPI;
 
    $PLUGIN_HOOKS['csrf_compliant']['archibp'] = true;
    $PLUGIN_HOOKS['change_profile']['archibp'] = ['PluginArchibpProfile', 'initProfile'];
@@ -35,6 +35,8 @@ function plugin_init_archibp() {
    //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archibp'] = true;
    //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archibp'] = ['PluginArchibpTask_Item'];
    
+   $CFG_GLPI['impact_asset_types']['PluginArchibpTask'] = Plugin::getPhpDir("archibp", false)."/bp.png";
+
    Plugin::registerClass('PluginArchibpTask', array(
          'linkgroup_tech_types'   => true,
          'linkuser_tech_types'    => true,
@@ -89,7 +91,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '1.0.8',
+      'version' => '1.0.9',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',

@@ -91,10 +91,16 @@ function plugin_archibp_uninstall() {
                "glpi_logs",
                "glpi_items_tickets",
                "glpi_notepads",
-               "glpi_dropdowntranslations"];
+               "glpi_dropdowntranslations",
+               "glpi_impactitems"];
 
    foreach($tables_glpi as $table_glpi)
       $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginArchibp%' ;");
+
+   $DB->query("DELETE
+                  FROM `glpi_impactrelations`
+                  WHERE `itemtype_source` IN ('PluginArchibpTask')
+                    OR `itemtype_impacted` IN ('PluginArchibpTask')");
 
    if (class_exists('PluginDatainjectionModel')) {
       PluginDatainjectionModel::clean(['itemtype'=>'PluginArchibpTask']);

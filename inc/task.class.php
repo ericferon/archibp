@@ -201,6 +201,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       $this->addDefaultFormTab($ong);
       $this->addStandardTab('PluginArchibpTask', $ong, $options);
       $this->addStandardTab('PluginArchibpTask_Item', $ong, $options);
+      $this->addImpactTab($ong, $options);
       $this->addStandardTab('Notepad', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
 
