@@ -32,7 +32,7 @@ function plugin_archibp_install() {
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archibp_tasks")) {
 
-		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.0.sql");
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.1.sql");
 	}
 
    
