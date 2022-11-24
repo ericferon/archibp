@@ -169,6 +169,14 @@ class PluginArchibpTask extends CommonTreeDropdown {
       ];
 
       $tab[] = [
+         'id'       => '21',
+         'table'    => 'glpi_plugin_archibp_tasktargets',
+         'field'    => 'name',
+         'name'     => PluginArchibpTaskTarget::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
          'id'            => '72',
          'table'         => $this->getTable(),
          'field'         => 'id',
@@ -273,6 +281,14 @@ class PluginArchibpTask extends CommonTreeDropdown {
       echo "</td>";
       echo "</tr>";
       
+      echo "<tr class='tab_bg_1'>";
+	      //target
+	      echo "<td>".__('Targets','archibp')."</td>";
+		   echo "<td>";
+	      Dropdown::show('PluginArchibpTaskTarget', ['value' => $this->fields["plugin_archibp_tasktargets_id"]]);
+	      echo "</td>";
+      echo "</tr>";
+
       echo "<tr class='tab_bg_1'>";
       //application
       echo "<td>".__('Linked to application', 'archibp').": </td><td>";

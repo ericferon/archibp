@@ -57,10 +57,10 @@ function plugin_init_archibp() {
    if (class_exists('PluginArchidataDataelement')) {
       PluginArchidataDataelement::registerType('PluginArchibpTask');
    }
-/*   if (class_exists('PluginArchifunFuncarea')) {
+   if (class_exists('PluginArchifunFuncarea')) {
       PluginArchifunFuncarea::registerType('PluginArchibpTask');
    }
-*/   //Plugin::registerClass('PluginArchibpTask_Item',
+   //Plugin::registerClass('PluginArchibpTask_Item',
    //                      ['ticket_types' => true]);
       
    if (Session::getLoginUserID()) {
@@ -91,7 +91,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '1.0.10',
+      'version' => '1.0.11',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',

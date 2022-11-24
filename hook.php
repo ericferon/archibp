@@ -29,34 +29,16 @@ function plugin_archibp_install() {
 
    include_once (Plugin::getPhpDir("archibp")."/inc/profile.class.php");
 
-   $update=false;
    if (!$DB->TableExists("glpi_plugin_archibp_tasks")) {
 
-		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.1.sql");
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.2.sql");
+	}
+   else if (!$DB->TableExists("glpi_plugin_archibp_tasktargets")) {
+
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-1.0.0.sql");
 	}
 
    
-   if ($update) {
-      $query_="SELECT *
-            FROM `glpi_plugin_archibp_profiles` ";
-      $result_=$DB->query($query_);
-      if ($DB->numrows($result_)>0) {
-
-         while ($data=$DB->fetch_array($result_)) {
-            $query="UPDATE `glpi_plugin_archibp_profiles`
-                  SET `profiles_id` = '".$data["id"]."'
-                  WHERE `id` = '".$data["id"]."';";
-            $result=$DB->query($query);
-
-         }
-      }
-
-      $query="ALTER TABLE `glpi_plugin_archibp_profiles`
-               DROP `name` ;";
-      $result=$DB->query($query);
-
-   }
-
    PluginArchibpProfile::initProfile();
    PluginArchibpProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 //   $migration = new Migration("2.0.0");
@@ -75,7 +57,9 @@ function plugin_archibp_uninstall() {
 					"glpi_plugin_archibp_criticities",
 					"glpi_plugin_archibp_tasktypes",
 					"glpi_plugin_archibp_tasks_items",
-					"glpi_plugin_archibp_profiles"];
+					"glpi_plugin_archibp_profiles",
+                    "glpi_plugin_archibp_tasktargets"
+              ];
 
    foreach($tables as $table)
       $DB->query("DROP TABLE IF EXISTS `$table`;");
@@ -141,6 +125,7 @@ function plugin_archibp_getTaskRelations() {
 					 "glpi_plugin_archibp_tasktypes"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_tasktypes_id"],
 					 "glpi_plugin_archibp_criticities"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_criticities_id"],
 					 "glpi_plugin_archibp_swcomponents"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_swcomponents_id"],
+					 "glpi_plugin_archibp_tasktargets"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_tasktargets_id"],
 					 "glpi_entities"=>["glpi_plugin_archibp_tasks"=>"entities_id"],
 					 "glpi_groups"=>["glpi_plugin_archibp_tasks"=>"groups_id"],
 					 "glpi_users"=>["glpi_plugin_archibp_tasks"=>"users_id"]
@@ -155,6 +140,7 @@ function plugin_archibp_getDropdown() {
    $plugin = new Plugin();
    if ($plugin->isActivated("archibp"))
 		return array('PluginArchibpTasktype'=>PluginArchibpTasktype::getTypeName(2), //getTypeName(2) does not work
+                'PluginArchibpTaskTarget'=>PluginArchibpTaskTarget::getTypeName(2),
                 'PluginArchibpCriticity'=>PluginArchibpCriticity::getTypeName(2)
                 );
    else
