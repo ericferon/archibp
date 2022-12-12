@@ -35,9 +35,10 @@ class PluginArchibpTask extends CommonTreeDropdown {
    protected $usenotepad         = true;
    
    static $types = ['Group', 
-					'PluginArchidataDataelement',
+//					'PluginArchidataDataelement',
 					'PluginArchifunFuncarea',
-					'PluginArchiswSwcomponent'];
+//					'PluginArchiswSwcomponent'
+                    ];
 
    static function getTypeName($nb=0) {
 
