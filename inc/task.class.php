@@ -156,7 +156,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
          'field'     => 'name',
          'linkfield' => 'groups_id',
          'name'      => __('Task Follow-up', 'archibp'),
-         'condition' => '`is_assign`',
+//         'condition' => '`is_assign`',
          'datatype'  => 'dropdown'
       ];
 
