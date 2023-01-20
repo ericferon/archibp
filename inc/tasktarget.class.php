@@ -28,7 +28,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginArchibpTaskTarget extends CommonDropdown {
+class PluginArchibpTasktarget extends CommonDropdown {
 
    static $rightname = "plugin_archibp";
    var $can_be_translated  = true;

@@ -26,7 +26,7 @@
 
 include ('../../../inc/includes.php');
 
-$dropdown = new PluginArchibpTaskTarget();
+$dropdown = new PluginArchibpTasktarget();
 include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
 ?>

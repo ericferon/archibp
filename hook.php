@@ -31,12 +31,19 @@ function plugin_archibp_install() {
 
    if (!$DB->TableExists("glpi_plugin_archibp_tasks")) {
 
-		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.2.sql");
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-1.0.3.sql");
 	}
-   else if (!$DB->TableExists("glpi_plugin_archibp_tasktargets")) {
+   else 
+   {
+      if (!$DB->TableExists("glpi_plugin_archibp_tasktargets")) {
 
 		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-1.0.0.sql");
-	}
+      }
+      if (!$DB->TableExists("glpi_plugin_archibp_taskstates")) {
+
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-1.0.1.sql");
+      }
+   }
 
    
    PluginArchibpProfile::initProfile();
@@ -56,6 +63,7 @@ function plugin_archibp_uninstall() {
 	$tables = ["glpi_plugin_archibp_tasks",
 					"glpi_plugin_archibp_criticities",
 					"glpi_plugin_archibp_tasktypes",
+					"glpi_plugin_archibp_taskstates",
 					"glpi_plugin_archibp_tasks_items",
 					"glpi_plugin_archibp_profiles",
                     "glpi_plugin_archibp_tasktargets"
@@ -123,6 +131,7 @@ function plugin_archibp_getTaskRelations() {
    if ($plugin->isActivated("archibp"))
 		return ["glpi_plugin_archibp_tasks"=>["glpi_plugin_archibp_tasks_items"=>"plugin_archibp_tasks_id"],
 					 "glpi_plugin_archibp_tasktypes"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_tasktypes_id"],
+					 "glpi_plugin_archibp_taskstates"=>["glpi_plugin_archibp_tasks"=>"glpi_plugin_archibp_taskstates"],
 					 "glpi_plugin_archibp_criticities"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_criticities_id"],
 					 "glpi_plugin_archibp_swcomponents"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_swcomponents_id"],
 					 "glpi_plugin_archibp_tasktargets"=>["glpi_plugin_archibp_tasks"=>"plugin_archibp_tasktargets_id"],
@@ -140,7 +149,8 @@ function plugin_archibp_getDropdown() {
    $plugin = new Plugin();
    if ($plugin->isActivated("archibp"))
 		return array('PluginArchibpTasktype'=>PluginArchibpTasktype::getTypeName(2), //getTypeName(2) does not work
-                'PluginArchibpTaskTarget'=>PluginArchibpTaskTarget::getTypeName(2),
+                'PluginArchibpTaskstate'=>PluginArchibpTaskstate::getTypeName(2),
+                'PluginArchibpTasktarget'=>PluginArchibpTasktarget::getTypeName(2),
                 'PluginArchibpCriticity'=>PluginArchibpCriticity::getTypeName(2)
                 );
    else

@@ -128,7 +128,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
          'id'       => '9',
          'table'    => 'glpi_plugin_archibp_tasktypes',
          'field'    => 'name',
-         'name'     => PluginArchibpTaskType::getTypeName(1),
+         'name'     => PluginArchibpTasktype::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
@@ -173,7 +173,15 @@ class PluginArchibpTask extends CommonTreeDropdown {
          'id'       => '21',
          'table'    => 'glpi_plugin_archibp_tasktargets',
          'field'    => 'name',
-         'name'     => PluginArchibpTaskTarget::getTypeName(1),
+         'name'     => PluginArchibpTasktarget::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '22',
+         'table'    => 'glpi_plugin_archibp_taskstates',
+         'field'    => 'name',
+         'name'     => PluginArchibpTaskstate::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
@@ -274,7 +282,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       echo "<tr class='tab_bg_1'>";
       //type
       echo "<td>".__('Type').": </td><td>";
-	      Dropdown::show('PluginArchibpTaskType', ['value' => $this->fields["plugin_archibp_tasktypes_id"]]);
+	      Dropdown::show('PluginArchibpTasktype', ['value' => $this->fields["plugin_archibp_tasktypes_id"]]);
       echo "</td>";
       //criticity
       echo "<td>".__('Criticity', 'archibp').": </td><td>";
@@ -286,7 +294,12 @@ class PluginArchibpTask extends CommonTreeDropdown {
 	      //target
 	      echo "<td>".__('Targets','archibp')."</td>";
 		   echo "<td>";
-	      Dropdown::show('PluginArchibpTaskTarget', ['value' => $this->fields["plugin_archibp_tasktargets_id"]]);
+	      Dropdown::show('PluginArchibpTasktarget', ['value' => $this->fields["plugin_archibp_tasktargets_id"]]);
+	      echo "</td>";
+	      //status
+	      echo "<td>".__('Status','archibp')."</td>";
+		   echo "<td>";
+	      Dropdown::show('PluginArchibpTaskstate', ['value' => $this->fields["plugin_archibp_taskstates_id"]]);
 	      echo "</td>";
       echo "</tr>";
 
