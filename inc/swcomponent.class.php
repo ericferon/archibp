@@ -2,7 +2,7 @@
 /*
  -------------------------------------------------------------------------
  Archibp plugin for GLPI
- Copyright (C) 2009-2018 by Eric Feron.
+ Copyright (C) 2009-2023 by Eric Feron.
  -------------------------------------------------------------------------
 
  LICENSE
@@ -23,22 +23,9 @@
  along with Archibp. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
-
-// Class for a Dropdown
-class PluginArchibpSwcomponent extends CommonDropdown {
-
-   static $rightname = "plugin_archibp";
-   var $can_be_translated  = true;
-   
-   static function getTypeName($nb=0) {
-
-      return _n('Apps Structure','Apps Structures',$nb);
-   }
-
-}
-
-?>
+      if (!defined('GLPI_ROOT')) {
+         die('Sorry. You cannott access directly to this file');
+      }
+      class PluginArchibpSwcomponent extends CommonDropdown {
+      }
+      ?>

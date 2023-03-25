@@ -2,7 +2,7 @@
 /*
  -------------------------------------------------------------------------
  Archibp plugin for GLPI
- Copyright (C) 2009-2023 by Eric Feron.
+ Copyright (C) 2009-2022 by Eric Feron.
  -------------------------------------------------------------------------
 
  LICENSE
@@ -23,9 +23,10 @@
  along with Archibp. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-      if (!defined('GLPI_ROOT')) {
-         die('Sorry. You cannott access directly to this file');
-      }
-      class PluginArchibpCriticity extends CommonDropdown {
-      }
-      ?>
+
+include ('../../../inc/includes.php');
+
+$dropdown = new PluginArchibpConfigbpDbfieldtype();
+include (GLPI_ROOT . "/front/dropdown.common.php");
+
+?>

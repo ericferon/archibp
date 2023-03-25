@@ -141,10 +141,13 @@ class PluginArchibpProfile extends Profile {
 
    static function getAllRights($all = false) {
       $rights = array(
-          array('itemtype'  => 'PluginArchibpTask',
+          ['itemtype'  => 'PluginArchibpTask',
                 'label'     => _n('Business Process', 'Business Processes', 2, 'archibp'),
-                'field'     => 'plugin_archibp'
-          ),
+                'field'     => 'plugin_archibp'],
+          ['rights'    => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update')],
+                'itemtype'  => 'PluginArchibpConfigbp',
+                'label'     => __('Configuration', 'archibp'),
+                'field'     => 'plugin_archibp_configuration']
       );
 
       if ($all) {

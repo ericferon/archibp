@@ -60,9 +60,22 @@ function plugin_init_archibp() {
       
    if (Session::getLoginUserID()) {
 
+      // link to fields plugin
+      $plugin = new Plugin();
+      if ($plugin->isActivated('fields')
+      && Session::haveRight("plugin_archibp", READ)) 
+      {
+         $PLUGIN_HOOKS['plugin_fields']['archibp'] = 'PluginArchibpTask';
+      }
+
       if (Session::haveRight("plugin_archibp", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archibp'] = ['assets'   => 'PluginArchibpMenu'];
+         $PLUGIN_HOOKS['menu_toadd']['archibp'] = ['assets'   => 'PluginArchibpMenu', "config" => 'PluginArchibpConfigbpMenu'];
+      }
+
+      if (Session::haveRight("plugin_archibp", READ)
+          || Session::haveRight("configbp", UPDATE)) {
+         $PLUGIN_HOOKS['configbp_page']['archibp']        = 'front/configbp.php';
       }
 
       if (Session::haveRight("plugin_archibp", UPDATE)) {
@@ -78,6 +91,13 @@ function plugin_init_archibp() {
 
       // Import from Data_Injection plugin
       $PLUGIN_HOOKS['migratetypes']['archibp'] = 'plugin_datainjection_migratetypes_archibp';
+      $PLUGIN_HOOKS['pre_item_update']['archibp'] = ['PluginArchibpConfigbp' => 'hook_pre_item_update_archibp_configbp', 
+                                                   'PluginArchibpConfigbpLink' => 'hook_pre_item_update_archibp_configbplink'];
+      $PLUGIN_HOOKS['pre_item_add']['archibp'] = ['PluginArchibpConfigbp' => 'hook_pre_item_add_archibp_configbp', 
+                                                   'PluginArchibpConfigbpLink' => 'hook_pre_item_add_archibp_configbplink'];
+      $PLUGIN_HOOKS['pre_item_purge']['archibp'] = ['PluginArchibpConfigbp' => 'hook_pre_item_purge_archibp_configbp', 
+                                                   'PluginArchibpConfigbpLink' => 'hook_pre_item_purge_archibp_configbplink'];
+
    }
 }
 
@@ -86,7 +106,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '1.0.14',
+      'version' => '2.0.0',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',
@@ -110,18 +130,18 @@ function plugin_archibp_check_prerequisites() {
       }
       return false;
    } else {
-		$query = "select * from glpi_plugins where directory = 'archisw' and state = 1";
+		$query = "select * from glpi_plugins where directory in ('archisw', 'statecheck') and state = 1";
 		$result_query = $DB->query($query);
-		if($DB->numRows($result_query) == 1) {
+		if($DB->numRows($result_query) == 2) {
 			return true;
 		} else {
-			echo "The plugin 'archisw' (a.k.a Apps structure inventory) must be installed before using 'archibp' (Business Process)";
+			echo "The 2 plugins 'archisw' (a.k.a Apps structure inventory) and 'statecheck' must be installed before using 'archibp' (Business Process)";
 		}
 	}
 }
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
-function plugin_archibp_check_config() {
+function plugin_archibp_check_configbp() {
    return true;
 }
 
@@ -130,4 +150,50 @@ function plugin_datainjection_migratetypes_archibp($types) {
    return $types;
 }
 
+// Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
+function hook_pre_item_add_archibp_configbp(CommonDBTM $item) {
+   global $DB;
+   $fieldname = $item->fields['name'];
+   $dbfield = new PluginArchibpConfigbpDbfieldtype;
+   if ($dbfield->getFromDB($item->fields['plugin_archibp_configbpdbfieldtypes_id'])) {
+      $fieldtype = $dbfield->fields['name'];
+      $query = "ALTER TABLE `glpi_plugin_archibp_tasks` ADD COLUMN IF NOT EXISTS $fieldname $fieldtype";
+      $result = $DB->query($query);
+      return true;
+   }
+   return false;
+}
+function hook_pre_item_update_archibp_configbp(CommonDBTM $item) {
+   global $DB;
+   $oldfieldname = $item->fields['name'];
+   $newfieldname = $item->input['name'];
+   $dbfield = new PluginArchibpConfigbpDbfieldtype;
+   if ($dbfield->getFromDB($item->fields['plugin_archibp_configbpdbfieldtypes_id'])) {
+      $fieldtype = $dbfield->fields['name'];
+      if ($oldfieldname != $newfieldname) {
+         $query = "ALTER TABLE `glpi_plugin_archibp_tasks` RENAME COLUMN $oldfieldname TO $newfieldname ";
+         $result = $DB->query($query);
+      }
+      $query = "ALTER TABLE `glpi_plugin_archibp_tasks` MODIFY $newfieldname $fieldtype";
+      $result = $DB->query($query);
+      return true;
+   }
+   return false;
+}
+function hook_pre_item_purge_archibp_configbp(CommonDBTM $item) {
+   global $DB;
+   $fieldname = $item->fields['name'];
+   $query = "ALTER TABLE `glpi_plugin_archibp_tasks` DROP COLUMN $fieldname";
+   $result = $DB->query($query);
+   $rowcount = $DB->numrows($fieldresult);
+   $tablename = 'glpi_'.substr($fieldname, 0, -3);
+   if ($item->fields['plugin_archibp_configbpdatatypes_id'] == 6 && substr($tablename, 0, 20) == 'glpi_plugin_archibp_') { //dropdown->drop table
+         $query = "DROP TABLE IF EXISTS `".$tablename."`";
+         $result = $DB->query($query);
+         $classname = 'PluginArchibp'.ucfirst(DbUtils::getSingular(substr($fieldname, 15, -3))); //cut ending '_id' and get singular form of word
+         $query = "DELETE FROM `glpi_plugin_archibp_configbplinks` WHERE `name` = '".$classname."'";
+         $result = $DB->query($query);
+   }
+   return true;
+}
 ?>

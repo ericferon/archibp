@@ -30,7 +30,7 @@ $plugin = new Plugin();
    Html::header(PluginArchibpTask::getTypeName(2), '', "assets","pluginarchibpmenu");
 $task = new PluginArchibpTask();
 
-if ($task->canView() || Session::haveRight("config", UPDATE)) {
+if ($task->canView() || Session::haveRight("configbp", UPDATE)) {
    Search::show('PluginArchibpTask');
 } else {
    Html::displayRightError();
