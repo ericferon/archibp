@@ -242,6 +242,9 @@ class PluginArchibpTask extends CommonTreeDropdown {
 	  $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
+      // define class for right alignment
+      echo "<style>.alignright { text-align: right; }</style>";
+      
       // Line: 1
       $curline = 1;
       echo "<tr class='tab_bg_1'>";
@@ -260,92 +263,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       Dropdown::show('PluginArchibpTask', ['value' => $this->fields["plugin_archibp_tasks_id"]]);
       echo "</td>";
       $halign = 3;
-/*      //level of task
-      echo "<td>".__('Level').": </td>";
-      echo "<td>";
-      echo Html::input('level',['value' => $this->fields['level'], 'id' => "level" , 'size' => 2, 'readonly' => true]);
-      echo "</td>";
-      echo "</tr>";
 
-      // Line: 3
-      echo "<tr class='tab_bg_1'>";
-      //description of task
-      echo "<td>".__('Description').":	</td>";
-      echo "<td class='top center' colspan='5'>";
-      echo Html::input('description',['value' => $this->fields['description'], 'id' => "description" , 'width' => "100%"]);
-      echo "</td>";
-      echo "</tr>";
-      echo "<tr class='tab_bg_1'>";
-      //comment about task
-      echo "<td>".__('Comment').":	</td>";
-      echo "<td class='top center' colspan='5'><textarea cols='100' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "</tr>";
-
-      // Line: 4
-      echo "<tr class='tab_bg_1'>";
-      //type
-      echo "<td>".__('Type').": </td><td>";
-	      Dropdown::show('PluginArchibpTasktype', ['value' => $this->fields["plugin_archibp_tasktypes_id"]]);
-      echo "</td>";
-      //criticity
-      echo "<td>".__('Criticity', 'archibp').": </td><td>";
-      Dropdown::show('PluginArchibpCriticity', ['name' => "plugin_archibp_criticities_id", 'value' => $this->fields["plugin_archibp_criticities_id"]]);
-      echo "</td>";
-      echo "</tr>";
-      
-      // Line: 5
-      echo "<tr class='tab_bg_1'>";
-	      //target
-	      echo "<td>".__('Targets','archibp')."</td>";
-		   echo "<td>";
-	      Dropdown::show('PluginArchibpTasktarget', ['value' => $this->fields["plugin_archibp_tasktargets_id"]]);
-	      echo "</td>";
-	      //status
-	      echo "<td>".__('Status','archibp')."</td>";
-		   echo "<td>";
-	      Dropdown::show('PluginArchibpTaskstate', ['value' => $this->fields["plugin_archibp_taskstates_id"]]);
-	      echo "</td>";
-      echo "</tr>";
-
-      // Line: 6
-      echo "<tr class='tab_bg_1'>";
-      //application
-      echo "<td>".__('Linked to application', 'archibp').": </td><td>";
-      Dropdown::show('PluginArchibpSwcomponent', ['name' => "plugin_archibp_swcomponents_id", 'value' => $this->fields["plugin_archibp_swcomponents_id"],'entity' => $this->fields["entities_id"]]);
-      echo "</td>";
-      //transaction code
-      echo "<td>".__('Transaction code', 'archibp').": </td>";
-      echo "<td>";
-      echo Html::input('transactioncode',['value' => $this->fields['transactioncode'], 'id' => "transactioncode" , 'width' => "100%"]);
-      echo "</td>";
-      echo "</tr>";
-
-      // Line: 7
-		echo "<tr class='tab_bg_1'>";
-		echo "<td>";
-		echo Html::link(__('URL doc.', 'archibp'), $this->fields["address"]);
-		echo "</td>";
-		echo "<td colspan='3'>";
-        echo Html::input('address',['value' => $this->fields['address'], 'id' => "address" , 'width' => "100%"]);
-		echo "</td>";
-		echo "</tr>";
-
-      // Line: 8
-      echo "<tr class='tab_bg_1'>";
-      //groups
-      echo "<td>".__("Task Owner's group", 'archibp')."</td><td>";
-      Group::dropdown(['name'      => 'groups_id', 
-                        'value'     => $this->fields['groups_id'], 
-                        'entity'    => $this->fields['entities_id'], 
-                        'condition' => ['is_assign' => 1]
-                        ]);
-      echo "</td>";
-      //users
-      echo "<td>".__('Task Expert', 'archibp')."</td><td>";
-      User::dropdown(['name' => "users_id", 'value' => $this->fields["users_id"], 'entity' => $this->fields["entities_id"], 'right' => 'interface']);
-      echo "</td>";
-      echo "</tr>";
-*/
       $linktable = [];
       $tablequery = "SELECT * FROM `glpi_plugin_archibp_configbplinks`";
       $tableresult = $DB->query($tablequery);
@@ -437,6 +355,18 @@ class PluginArchibpTask extends CommonTreeDropdown {
                   if ($halign <= $columncount - 1) {
                      $colspan = 1;
                      while ($halign < $columncount - 1) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               case 7: // Straddling 2 columns
+                  if ($halign < 2) {
+                     $colspan = 1;
+                     while ($halign < 2) { // fill empty columns
                         echo "<td/>";
                         $halign++;
                      }
@@ -554,6 +484,18 @@ class PluginArchibpTask extends CommonTreeDropdown {
                      $tonextrow = false;
                   }
                   break;
+               case 7: // Straddling 2 columns
+                  if ($halign < 2) {
+                     $colspan = 1;
+                     while ($halign < 2) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
                }
             }
             // End last table row
@@ -571,6 +513,8 @@ class PluginArchibpTask extends CommonTreeDropdown {
       $fieldname = $fielddata['name'];
       $fielddescription = $fielddata['description'];
       $fieldreadonly = $fielddata['is_readonly']?'true':'false';
+      $fieldtype = $fielddata['plugin_dataflows_configdfhaligns_id'];
+      $fieldhalign = ($fieldtype == '7') ? "class='alignright'":"";
       $params = [];
       $params['value'] = $this->fields[$fieldname];
       if ($fielddata['is_readonly']) {
@@ -578,7 +522,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       }
       switch($fielddata['plugin_archibp_configbpdatatypes_id']) {
          case 1: //Text
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             $params['id'] = $fieldname;
             $params['width'] = '100%';
@@ -586,25 +530,25 @@ class PluginArchibpTask extends CommonTreeDropdown {
             echo "</td>";
             break;
          case 2: //Boolean
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             Dropdown::showYesNo($fieldname,$this->fields[$fieldname], -1);
             echo "</td>";
             break;
          case 3: //Date
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             Html::showDateField($fieldname, ['value' => empty($this->fields[$fieldname])?date("Y-m-d"):$this->fields[$fieldname], 'readonly' => $fieldreadonly]);
             echo "</td>";
             break;
          case 4: //Date and time
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             Html::showDateTimeField($fieldname, ['value' => empty($this->fields[$fieldname])?date("Y-m-d H:i:s"):$this->fields[$fieldname], 'readonly' => $fieldreadonly]);
             echo "</td>";
             break;
          case 5: //Number
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             Dropdown::showNumber($fieldname, $params);
             echo "</td>";
@@ -614,7 +558,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
             if ($linktable[$fielddata['plugin_archibp_configbplinks_id']]['is_entity_limited']) {
                $params['entity'] = $this->fields["entities_id"];
             }
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             if ($linktable[$fielddata['plugin_archibp_configbplinks_id']]['has_dropdown']) {
                $linktable[$fielddata['plugin_archibp_configbplinks_id']]['name']::dropdown($params);
@@ -625,7 +569,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
             echo "</td>";
             break;
          case 7: //Itemlink
-            echo "<td>";
+            echo "<td $fieldhalign>";
             echo Html::link(__($fielddescription, 'archibp'), $this->fields[$fieldname]);
             echo "</td>";
             echo "<td colspan='".$colspan."'>";
@@ -635,7 +579,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
             echo "</td>";
             break;
          case 8: //Textarea
-            echo "<td>".__($fielddescription, 'archibp')."</td>";
+            echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             echo Html::textarea(['name' => $fieldname, 'value' => $this->fields[$fieldname], 'editor_id' => $fieldname, 
                                 'enable_richtext' => true, 'display' => false, 'rows' => 3, 'readonly' => $fieldreadonly]);

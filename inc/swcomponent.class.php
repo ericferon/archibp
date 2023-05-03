@@ -26,6 +26,6 @@
       if (!defined('GLPI_ROOT')) {
          die('Sorry. You cannott access directly to this file');
       }
-      class PluginArchibpSwcomponent extends CommonDropdown {
+      class PluginArchibpSwcomponent extends CommonTreeDropdown {
       }
       ?>

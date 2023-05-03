@@ -31,7 +31,7 @@ function plugin_archibp_install() {
 
    if (!$DB->TableExists("glpi_plugin_archibp_tasks")) {
 
-		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-2.0.0.sql");
+		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/empty-2.0.1.sql");
 	}
    else 
    {
@@ -43,12 +43,14 @@ function plugin_archibp_install() {
 
 		$DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-1.0.1.sql");
       }
-   }
+      if (!$DB->TableExists("glpi_plugin_archibp_configbps")) {
+         $DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-2.0.0.sql");
+      }
 
-   if (!$DB->TableExists("glpi_plugin_archibp_configbps")) {
-      $DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-2.0.0.sql");
+      if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archibp_configbphaligns where id = '7'")) == 0) {
+         $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-2.0.1.sql");
+      }
    }
-
    // regenerate configbpured fields
    if ($DB->TableExists("glpi_plugin_archibp_configbplinks") && $DB->TableExists("glpi_plugin_archibp_configbps")) {
       $query = "SELECT `glpi_plugin_archibp_configbplinks`.`name` as `classname`, `is_entity_limited`, `is_tree_dropdown`
@@ -61,6 +63,8 @@ function plugin_archibp_install() {
          $item->input['name'] = $data['classname'];
          $item->input['is_entity_limited'] = $data['is_entity_limited'];
          $item->input['is_tree_dropdown'] = $data['is_tree_dropdown'];
+         $item->input['as_view_on'] = $data['as_view_on'];
+         $item->input['viewlimit'] = $data['viewlimit'];
          hook_pre_item_add_archibp_configbplink($item); // simulate the creation of this field
       }
       // refresh with new files
@@ -343,7 +347,7 @@ function hook_pre_item_add_archibp_configbplink(CommonDBTM $item) {
    $newistreedropdown = $item->input['is_tree_dropdown'];
    $newisentitylimited = $item->input['is_entity_limited'];
    $newasviewon = $item->input['as_view_on'];
-   $newviewlimit = $item->input['viewlimit'];
+   $newviewlimit = str_replace("\'", "'", $item->input['viewlimit']); // unescape single quotes
    if (substr($newclassname, 0, 13) == 'PluginArchibp') {
       $rootname = strtolower(substr($newclassname, 13));
       $tablename = 'glpi_plugin_archibp_'.getPlural($rootname);
@@ -351,8 +355,15 @@ function hook_pre_item_add_archibp_configbplink(CommonDBTM $item) {
       if (!empty($newasviewon)) {
          $entities = ($newisentitylimited?" `entities_id`,":"");
          $name = ($newistreedropdown?" `completename`,":" `name`,");
-         $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
+         if (!$newistreedropdown) {
+            // new simple dropdown view
+            $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
                   SELECT `id`,$entities `name`, `comment` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+         } 
+         else { // new treedropdon view
+            $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive`) AS 
+                  SELECT `id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+         }
          $result = $DB->query($query);
       }
       else {
@@ -396,7 +407,7 @@ function hook_pre_item_update_archibp_configbplink(CommonDBTM $item) {
    $newclassname = $item->input['name'];
    $newistreedropdown = $item->input['is_tree_dropdown'];
    $newasviewon = $item->input['as_view_on'];
-   $newviewlimit = $item->input['viewlimit'];
+   $newviewlimit = str_replace("\'", "'", $item->input['viewlimit']); // unescape single quotes
    $oldclassname = $item->fields['name'];
    $oldistreedropdown = $item->fields['is_tree_dropdown'];
    $oldasviewon = $item->fields['as_view_on'];
@@ -424,8 +435,15 @@ function hook_pre_item_update_archibp_configbplink(CommonDBTM $item) {
             if (!empty($newasviewon)) {
                $entities = ($newisentitylimited?" `entities_id`,":"");
                $name = ($newistreedropdown?" `completename`,":" `name`,");
-               $query = "CREATE OR REPLACE VIEW `$newtablename` (`id`,$entities `name`, `comment`) AS 
+               if (!$newistreedropdown) {
+                  // new simple dropdown view
+                  $query = "CREATE OR REPLACE VIEW `$newtablename` (`id`,$entities `name`, `comment`) AS 
                         SELECT `id`,$entities `name`, `comment` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+               } 
+               else { // new treedropdon view
+                  $query = "CREATE OR REPLACE VIEW `$newtablename` (`id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive`) AS 
+                        SELECT `id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+               }
                $result = $DB->query($query);
             }
             else {
@@ -470,8 +488,15 @@ function hook_pre_item_update_archibp_configbplink(CommonDBTM $item) {
          if (!empty($newasviewon)) {
             $entities = ($newisentitylimited?" `entities_id`,":"");
             $name = ($newistreedropdown?" `completename`,":" `name`,");
-            $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
+            if (!$newistreedropdown) {
+               // new simple dropdown view
+               $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
                   SELECT `id`,$entities `name`, `comment` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+            } 
+            else { // new treedropdon view
+               $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive`) AS 
+                  SELECT `id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+            }
             $result = $DB->query($query);
          }
          else {
@@ -535,12 +560,19 @@ function hook_pre_item_purge_archibp_configbplink(CommonDBTM $item) {
    global $DB;
    $dir = Plugin::getPhpDir("archibp", true);
    $oldclassname = $item->fields['name'];
-   $oldfilename = strtolower(substr($oldclassname, 13));
+   $oldasviewon = $item->fields['as_view_on'];
+   $oldrootname = strtolower(substr($oldclassname, 13));
+   $oldfilename = $oldrootname;
    $oldid = $item->fields['id'];
    // suppress in glpi_plugin_archibp_configbps
    $query = "UPDATE `glpi_plugin_archibp_configbps` SET `plugin_archibp_configbplinks_id` = 0 WHERE `plugin_archibp_configbplinks_id` = '".$oldid."'";
    $result = $DB->query($query);
    if (substr($oldclassname, 0, 13) == 'PluginArchibp') {
+      $oldtablename = 'glpi_plugin_archibp_'.getPlural($oldrootname);
+      $oldfieldname = 'plugin_archibp_'.getPlural($oldrootname).'_id';
+      $tableorview = empty($oldasviewon)?"TABLE":"VIEW";
+      $query = "DROP $tableorview IF EXISTS `".$oldtablename."`";
+      $result = $DB->query($query);
       // delete files in inc and front directories
       if (file_exists($dir.'/inc/'.$oldfilename.'.class.php')) 
          unlink($dir.'/inc/'.$oldfilename.'.class.php');
