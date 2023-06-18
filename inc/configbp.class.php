@@ -31,20 +31,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginArchibpConfigbp extends CommonDBTM {
 
    public $dohistory=true;
-   static $rightname = "plugin_archibp";
+   static $rightname = "plugin_archibp_configuration";
    protected $usenotepad         = true;
    
    static function getTypeName($nb=0) {
 
-      return __('Configbp', 'archibp');
-   }
-
-   public static function canCreate() {
-      return Session::haveRight(static::$rightname, UPDATE);
-   }
-
-   public static function canView() {
-      return Session::haveRight(static::$rightname, READ);
+      return __('Business Process Config', 'archibp');
    }
 
    // search fields from GLPI 9.3 on

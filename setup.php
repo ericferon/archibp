@@ -70,7 +70,12 @@ function plugin_init_archibp() {
 
       if (Session::haveRight("plugin_archibp", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archibp'] = ['assets'   => 'PluginArchibpMenu', "config" => 'PluginArchibpConfigbpMenu'];
+         $PLUGIN_HOOKS['menu_toadd']['archibp']['assets'] = 'PluginArchibpMenu';
+      }
+
+      if (Session::haveRight("plugin_archibp_configuration", READ)) {
+
+         $PLUGIN_HOOKS['menu_toadd']['archibp']['config'] = 'PluginArchibpConfigbpMenu';
       }
 
       if (Session::haveRight("plugin_archibp", READ)
@@ -106,7 +111,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '2.0.2',
+      'version' => '2.0.3',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',

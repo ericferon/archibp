@@ -30,7 +30,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchibpConfigbpDatatype extends CommonDropdown {
 
-   static $rightname = "plugin_archibp";
+   static $rightname = "plugin_archibp_configuration";
    var $can_be_translated  = true;
    
    static function getTypeName($nb=0) {

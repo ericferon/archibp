@@ -558,6 +558,9 @@ class PluginArchibpTask extends CommonTreeDropdown {
             if ($linktable[$fielddata['plugin_archibp_configbplinks_id']]['is_entity_limited']) {
                $params['entity'] = $this->fields["entities_id"];
             }
+            if ($linktable[$fielddata['plugin_archibp_configbplinks_id']]['name'] == 'User') {
+               $params['right'] = 'interface';
+            }
             echo "<td $fieldhalign>".__($fielddescription, 'archibp')."</td>";
             echo "<td colspan='".$colspan."'>";
             if ($linktable[$fielddata['plugin_archibp_configbplinks_id']]['has_dropdown']) {

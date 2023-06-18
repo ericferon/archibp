@@ -24,7 +24,7 @@
  --------------------------------------------------------------------------
  */
 class PluginArchibpConfigbpMenu extends CommonGLPI {
-   static $rightname = 'plugin_archibp';
+   static $rightname = 'plugin_archibp_configuration';
 
    static function getMenuName() {
       return _n('Business Process configuration', 'Business Processes configuration', 2, 'archibp');
