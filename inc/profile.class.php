@@ -144,7 +144,7 @@ class PluginArchibpProfile extends Profile {
           ['itemtype'  => 'PluginArchibpTask',
                 'label'     => _n('Business Process', 'Business Processes', 2, 'archibp'),
                 'field'     => 'plugin_archibp'],
-          ['rights'    => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update')],
+          ['rights'    => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update'), DELETE => __('Put in trashbin'), PURGE => __('Delete permanently')],
                 'itemtype'  => 'PluginArchibpConfigbp',
                 'label'     => __('Configuration', 'archibp'),
                 'field'     => 'plugin_archibp_configuration']

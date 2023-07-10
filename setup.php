@@ -111,7 +111,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '2.0.3',
+      'version' => '2.0.4',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',
@@ -188,19 +188,8 @@ function hook_pre_item_update_archibp_configbp(CommonDBTM $item) {
 function hook_pre_item_purge_archibp_configbp(CommonDBTM $item) {
    global $DB;
    $fieldname = $item->fields['name'];
-   $asviewon = $item->fields['as_view_on'];
-   $query = "ALTER TABLE `glpi_plugin_archibp_tasks` DROP COLUMN $fieldname";
+   $query = "ALTER TABLE `glpi_plugin_archibp_tasks` DROP COLUMN IF EXISTS $fieldname";
    $result = $DB->query($query);
-   $rowcount = $DB->numrows($fieldresult);
-   $tablename = 'glpi_'.substr($fieldname, 0, -3);
-   if ($item->fields['plugin_archibp_configbpdatatypes_id'] == 6 && substr($tablename, 0, 20) == 'glpi_plugin_archibp_') { //dropdown->drop table
-         $tableorview = empty($asviewon)?"TABLE":"VIEW";
-         $query = "DROP $tableorview IF EXISTS `".$tablename."`";
-         $result = $DB->query($query);
-         $classname = 'PluginArchibp'.ucfirst(DbUtils::getSingular(substr($fieldname, 15, -3))); //cut ending '_id' and get singular form of word
-         $query = "DELETE FROM `glpi_plugin_archibp_configbplinks` WHERE `name` = '".$classname."'";
-         $result = $DB->query($query);
-   }
    return true;
 }
 ?>
