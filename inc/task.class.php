@@ -154,6 +154,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
                ];
                break;
             case 6: //Dropdown
+            case 6: //TreeDropdown
                $linktableid = $fielddata['plugin_archibp_configbplinks_id'];
                $itemtype = $linktable[$linktableid]['name'];
                $tablename = $this->getTable($itemtype);
@@ -162,7 +163,9 @@ class PluginArchibpTask extends CommonTreeDropdown {
                   'table'    => $tablename,
                   'field'    => 'name',
                   'name'     => __($fielddata['description'],'archibp'),
-                  'datatype' => $datatypetable[$datatypeid]['name']
+                  'datatype' => $datatypetable[$datatypeid]['name'],
+                  'massiveaction' => $fielddata['massiveaction'],
+                  'nosearch' => $fielddata['nosearch']
                ];
                break;
             case 7: //Itemlink
@@ -554,7 +557,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
             echo "</td>";
             break;
          case 6: //Dropdown
-         case 9: //Dropdown
+         case 9: //TreeDropdown
             if ($linktable[$fielddata['plugin_archibp_configbplinks_id']]['is_entity_limited']) {
                $params['entity'] = $this->fields["entities_id"];
             }

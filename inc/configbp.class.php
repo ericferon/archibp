@@ -128,12 +128,20 @@ class PluginArchibpConfigbp extends CommonDBTM {
          'id'       => '15',
          'table'    => $this->getTable(),
          'field'    => 'nosearch',
-         'name'     => __('Massive action allowed ?', 'archibp'),
+         'name'     => __('Search disabled ?', 'archisw'),
          'datatype' => 'bool'
       ];
 
       $tab[] = [
          'id'       => '16',
+         'table'    => $this->getTable(),
+         'field'    => 'massiveaction',
+         'name'     => __('Massive action allowed ?', 'archisw'),
+         'datatype' => 'bool'
+      ];
+
+      $tab[] = [
+         'id'       => '17',
          'table'    => $this->getTable(),
          'field'    => 'forcegroupby',
          'name'     => __('Force group by ?', 'archibp'),
@@ -221,7 +229,7 @@ class PluginArchibpConfigbp extends CommonDBTM {
 	  
       echo "<tr class='tab_bg_1'>";
       //nosearch
-      echo "<td>".__('Search allowed ?', 'archibp').": </td>";
+      echo "<td>".__('Search disabled ?', 'archibp').": </td>";
       echo "<td>";
       Dropdown::showYesNo('nosearch',$this->fields['nosearch']);
       echo "</td>";
