@@ -111,7 +111,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '2.0.5',
+      'version' => '2.0.6',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',
@@ -163,6 +163,9 @@ function hook_pre_item_add_archibp_configbp(CommonDBTM $item) {
    if ($dbfield->getFromDB($item->fields['plugin_archibp_configbpdbfieldtypes_id'])) {
       $fieldtype = $dbfield->fields['name'];
       $query = "ALTER TABLE `glpi_plugin_archibp_tasks` ADD COLUMN IF NOT EXISTS $fieldname $fieldtype";
+      if($item->fields['plugin_dataflows_configbpdatatypes_id'] == 6) {// if dropdown, add key
+         $query .= ", ADD KEY IF NOT EXISTS $fieldname ($fieldname)";
+      }
       $result = $DB->query($query);
       return true;
    }
@@ -176,10 +179,13 @@ function hook_pre_item_update_archibp_configbp(CommonDBTM $item) {
    if ($dbfield->getFromDB($item->fields['plugin_archibp_configbpdbfieldtypes_id'])) {
       $fieldtype = $dbfield->fields['name'];
       if ($oldfieldname != $newfieldname) {
-         $query = "ALTER TABLE `glpi_plugin_archibp_tasks` CHANGE COLUMN $oldfieldname $newfieldname ";
-         $result = $DB->query($query);
+         $query = "ALTER TABLE `glpi_plugin_archibp_tasks` CHANGE COLUMN $oldfieldname $newfieldname $fieldtype";
+      } else {
+         $query = "ALTER TABLE `glpi_plugin_archibp_tasks` MODIFY $newfieldname $fieldtype";
       }
-      $query = "ALTER TABLE `glpi_plugin_archibp_tasks` MODIFY $newfieldname $fieldtype";
+      if($item->input['plugin_dataflows_configbpdatatypes_id'] == 6) {// if dropdown, add key
+         $query .= ", ADD KEY IF NOT EXISTS $newfieldname ($newfieldname)";
+      }
       $result = $DB->query($query);
       return true;
    }
