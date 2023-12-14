@@ -143,30 +143,35 @@ class PluginArchibpTask extends CommonTreeDropdown {
             case 4: //Date and time
             case 5: //Number
             case 8: //Textarea
-               $tab[] = [
+               $params = [
                   'id'       => $tabid,
                   'table'    => $tabtable,
                   'field'    => $fielddata['name'],
-                  'name'     => __($fielddata['description'],'archibp'),
+                  'name'     => __($fielddata['description'],'dataflows'),
                   'datatype' => $datatypetable[$datatypeid]['name'],
                   'massiveaction' => $fielddata['massiveaction'],
                   'nosearch' => $fielddata['nosearch']
                ];
+               $tab[] = $params;
                break;
             case 6: //Dropdown
             case 6: //TreeDropdown
                $linktableid = $fielddata['plugin_archibp_configbplinks_id'];
                $itemtype = $linktable[$linktableid]['name'];
                $tablename = $this->getTable($itemtype);
-               $tab[] = [
+               $params = [
                   'id'       => $tabid,
                   'table'    => $tablename,
                   'field'    => 'name',
-                  'name'     => __($fielddata['description'],'archibp'),
+                  'name'     => __($fielddata['description'],'dataflows'),
                   'datatype' => $datatypetable[$datatypeid]['name'],
                   'massiveaction' => $fielddata['massiveaction'],
                   'nosearch' => $fielddata['nosearch']
                ];
+               if ($itemtype == 'User') {
+                  $params['right'] = 'interface';
+               }
+               $tab[] = $params;
                break;
             case 7: //Itemlink
                break;
