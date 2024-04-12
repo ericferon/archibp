@@ -147,7 +147,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
                   'id'       => $tabid,
                   'table'    => $tabtable,
                   'field'    => $fielddata['name'],
-                  'name'     => __($fielddata['description'],'dataflows'),
+                  'name'     => __($fielddata['description'],'archibp'),
                   'datatype' => $datatypetable[$datatypeid]['name'],
                   'massiveaction' => $fielddata['massiveaction'],
                   'nosearch' => $fielddata['nosearch']
@@ -163,7 +163,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
                   'id'       => $tabid,
                   'table'    => $tablename,
                   'field'    => 'name',
-                  'name'     => __($fielddata['description'],'dataflows'),
+                  'name'     => __($fielddata['description'],'archibp'),
                   'datatype' => $datatypetable[$datatypeid]['name'],
                   'massiveaction' => $fielddata['massiveaction'],
                   'nosearch' => $fielddata['nosearch']
@@ -521,7 +521,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
       $fieldname = $fielddata['name'];
       $fielddescription = $fielddata['description'];
       $fieldreadonly = $fielddata['is_readonly']?'true':'false';
-      $fieldtype = $fielddata['plugin_dataflows_configdfhaligns_id'];
+      $fieldtype = $fielddata['plugin_archibp_configbphaligns_id'];
       $fieldhalign = ($fieldtype == '7') ? "class='alignright'":"";
       $params = [];
       $params['value'] = $this->fields[$fieldname];
@@ -600,10 +600,10 @@ class PluginArchibpTask extends CommonTreeDropdown {
    }
 
    /**
-    * Make a select box for link dataflow
+    * Make a select box for link task
     *
     * Parameters which could be used in options array :
-    *    - name : string / name of the select (default is plugin_dataflows_dataflowtypes_id)
+    *    - name : string / name of the select (default is plugin_archibp_tasktypes_id)
     *    - entity : integer or array / restrict to a defined entity or array of entities
     *                   (default -1 : no restriction)
     *    - used : array / Already used items ID: not to display in dropdown (default empty)

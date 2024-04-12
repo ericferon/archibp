@@ -407,12 +407,12 @@ class PluginArchibpTask_Item extends CommonDBRelation {
       $number = $DB->numrows($result);
       $i      = 0;
 
-      $dataflows      = [];
+      $tasks      = [];
       $task       = new PluginArchibpTask();
       $used          = [];
       if ($numrows = $DB->numrows($result)) {
          while ($data = $DB->fetchAssoc($result)) {
-            $dataflows[$data['assocID']] = $data;
+            $tasks[$data['assocID']] = $data;
             $used[$data['id']] = $data['id'];
          }
       }
@@ -448,7 +448,7 @@ class PluginArchibpTask_Item extends CommonDBRelation {
 
          if (Session::haveRight('plugin_archibp', READ)
              && ($nb > count($used))) {
-            echo "<form name='dataflow_form$rand' id='dataflow_form$rand' method='post'
+            echo "<form name='task_form$rand' id='task_form$rand' method='post'
                    action='".Toolbox::getItemTypeFormURL('PluginArchibpTask')."'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr class='tab_bg_1'>";
@@ -508,17 +508,17 @@ class PluginArchibpTask_Item extends CommonDBRelation {
                                                 $item->getTypeName(1), $item->getName()));
 
 
-         foreach  ($dataflows as $data) {
-            $dataflowID        = $data["id"];
+         foreach  ($tasks as $data) {
+            $taskID        = $data["id"];
             $link             = NOT_AVAILABLE;
 
-            if ($task->getFromDB($dataflowID)) {
+            if ($task->getFromDB($taskID)) {
                $link         = $task->getLink();
             }
 
-            Session::addToNavigateListItems('PluginArchibpTask', $dataflowID);
+            Session::addToNavigateListItems('PluginArchibpTask', $taskID);
 
-            $used[$dataflowID]   = $dataflowID;
+            $used[$taskID]   = $taskID;
             $assocID             = $data["assocID"];
 
             echo "<tr class='tab_bg_1".($data["is_deleted"]?"_2":"")."'>";
