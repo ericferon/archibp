@@ -35,7 +35,7 @@ function plugin_init_archibp() {
    //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archibp'] = true;
    //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archibp'] = ['PluginArchibpTask_Item'];
    
-   $CFG_GLPI['impact_asset_types']['PluginArchibpTask'] = Plugin::getPhpDir("archibp", false)."/bp.png";
+   $CFG_GLPI['impact_asset_types']['PluginArchibpTask'] = Plugin::getWebDir("archibp", false)."/bp.png";
 
    Plugin::registerClass('PluginArchibpTask', array(
          'linkgroup_tech_types'   => true,
@@ -111,7 +111,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '2.0.9',
+      'version' => '2.0.10',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',
