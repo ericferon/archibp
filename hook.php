@@ -48,7 +48,7 @@ function plugin_archibp_install() {
       }
 
       if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archibp_configbphaligns where id = '7'")) == 0) {
-         $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-2.0.1.sql");
+         $DB->runFile(Plugin::getPhpDir("archibp")."/sql/update-2.0.1.sql");
       }
    }
    // regenerate configbpured fields
