@@ -186,6 +186,14 @@ function plugin_archibp_postinit() {
 }
 
 
+function plugin_archibp_AssignToTicket($types) {
+
+   if (Session::haveRight("plugin_archibp_open_ticket", "1")) {
+      $types['PluginArchibpTask'] = PluginArchibpTask::getTypeName(2);
+   }
+   return $types;
+}
+
 // Define dropdown relations
 function plugin_archibp_getTaskRelations() {
 

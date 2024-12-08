@@ -30,10 +30,10 @@ function plugin_init_archibp() {
 
    $PLUGIN_HOOKS['csrf_compliant']['archibp'] = true;
    $PLUGIN_HOOKS['change_profile']['archibp'] = ['PluginArchibpProfile', 'initProfile'];
-//   $PLUGIN_HOOKS['assign_to_ticket']['archibp'] = false;
+   $PLUGIN_HOOKS['assign_to_ticket']['archibp'] = true;
    
-   //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archibp'] = true;
-   //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archibp'] = ['PluginArchibpTask_Item'];
+   $PLUGIN_HOOKS['assign_to_ticket_dropdown']['archibp'] = true;
+   $PLUGIN_HOOKS['assign_to_ticket_itemtype']['archibp'] = ['PluginArchibpTask_Item'];
    
    $CFG_GLPI['impact_asset_types']['PluginArchibpTask'] = Plugin::getWebDir("archibp", false)."/bp.png";
 
@@ -41,7 +41,7 @@ function plugin_init_archibp() {
          'linkgroup_tech_types'   => true,
          'linkuser_tech_types'    => true,
          'document_types'         => true,
-//         'ticket_types'           => true,
+         'ticket_types'           => true,
          'helpdesk_visible_types' => true//,
 //         'addtabon'               => 'Supplier'
    ));
@@ -111,7 +111,7 @@ function plugin_version_archibp() {
 
    return array (
       'name' => _n('Business Process', 'Business Processes', 2, 'archibp'),
-      'version' => '2.0.11',
+      'version' => '2.0.12',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'https://github.com/ericferon/glpi-archibp',

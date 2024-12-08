@@ -36,6 +36,7 @@ class PluginArchibpTask extends CommonTreeDropdown {
    
    static $types = ['Group', 
 //					'PluginArchidataDataelement',
+					'Entity',
 					'PluginArchifunFuncarea',
 //					'PluginArchibpSwcomponent'
                     ];
